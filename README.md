@@ -1,19 +1,20 @@
-# Little Esty Shop
+# Bulk Discounts
 
-### Turing 2110 Backend Module 2: [Little Esty Shop Project](https://github.com/turingschool-examples/little-esty-shop)
+### Turing 2110 Backend Module 2: [Bulk Discounts](https://backend.turing.edu/module2/projects/bulk_discounts)
 
 ## Schema
-<img width="788" alt="Screen Shot 2022-01-12 at 8 45 09 AM" src="https://user-images.githubusercontent.com/89048720/149183923-2e245216-e62a-40e8-8974-1ce1b661382a.png">
 
 ## Description
 
-"Little Esty Shop" is a group project that was built to simulate a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. 
+This project is an extension of the Little Esty Shop group project. I added functionality for merchants to create bulk discounts for their items. A “bulk discount” is a discount based on the quantity of items the customer is buying, for example “20% off orders of 10 or more items”.
 
 ## Learning Goals
-- Practice designing a normalized database schema and defining model relationships
-- Utilize advanced routing techniques including namespacing to organize and group like functionality together.
-- Utilize advanced active record techniques to perform complex database queries
-- Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
+   - Write migrations to create tables and relationships between tables
+   - Implement CRUD functionality for a resource using forms (form_tag or form_with), buttons, and links
+   - Use MVC to organize code effectively, limiting the amount of logic included in views and controllers
+   - Use built-in ActiveRecord methods to join multiple tables of data, make calculations, and group data based on one or more attributes
+   - Write model tests that fully cover the data logic of the application
+   - Write feature tests that fully cover the functionality of the application
 
 ## Setup/Testing
 
@@ -28,9 +29,5 @@ This project requires Ruby 2.7.2 and Rails 5.2.6 using PostgreSQL.
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
 
-## Authors
-- [Kevin Gloss](https://github.com/kevingloss)
-- [Davin Kassin](https://github.com/dkassin)
-- [Kelly Anderson](https://github.com/kanderson852)
+## Author
 - [Robin Dittrich](https://github.com/Dittrir)
-- [Craig Cardwell](https://github.com/Eagerlearn)
