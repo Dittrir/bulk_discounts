@@ -24,7 +24,7 @@ This project requires Ruby 2.7.2 and Rails 5.2.6 using PostgreSQL.
 * Clone your fork
 * From the command line, install gems and set up your DB:
     * `bundle`
-    * `rails db:create`
+    * `rails db:{drop,create,migrate,seed}`
     * `rake csv_load:all` (populate the database from pre-made CSV files)
 * Run the test suite with `bundle exec rspec`.
 * Run your development server with `rails s` to see the app in action.
