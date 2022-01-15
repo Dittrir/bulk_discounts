@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Merchant Dashboard Index' do
   describe 'view' do
-    # before(:each) do
-    #   @merchant_1 = Merchant.create!(name: "Frank")
-    # end
-
     it 'displays the name of the Merchant' do
       visit "/merchants/#{@merchant_1.id}/dashboard"
 
@@ -72,6 +68,15 @@ RSpec.describe 'Merchant Dashboard Index' do
       expect("#{@invoice_1.id}").to appear_before("#{@invoice_2.id}")
       expect("#{@invoice_2.id}").to appear_before("#{@invoice_3.id}")
       expect("#{@invoice_3.id}").to appear_before("#{@invoice_4.id}")
+    end
+
+    it 'displays a link to view all discounts' do
+      visit "/merchants/#{@merchant_1.id}/dashboard"
+
+      expect(page).to have_link("View All My Discounts")
+      click_link("View All My Discounts")
+
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts")
     end
   end
 end
