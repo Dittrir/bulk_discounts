@@ -4,6 +4,8 @@
 
 ## Schema
 
+![Screen Shot 2022-01-14 at 4 48 16 PM](https://user-images.githubusercontent.com/89048720/149602188-388b80f6-46e1-465d-a32d-ce7ccd905acb.png)
+
 ## Description
 
 This project is an extension of the Little Esty Shop group project. I added functionality for merchants to create bulk discounts for their items. A “bulk discount” is a discount based on the quantity of items the customer is buying, for example “20% off orders of 10 or more items”.
