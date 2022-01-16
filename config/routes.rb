@@ -11,7 +11,7 @@ get '/merchants/:merchant_id/dashboard', to: 'merchants#dashboard'
     resources :items
     resources :invoices, only: [:index, :show]
     resources :invoice_items, only: :update
-    resources :bulk_discounts, only: [:index, :show, :new, :create]
+    resources :bulk_discounts, only: [:index, :show, :new, :create, :destroy]
   end
 
   namespace :admin do
