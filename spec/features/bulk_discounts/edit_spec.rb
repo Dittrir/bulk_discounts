@@ -29,7 +29,7 @@ RSpec.describe 'Bulk Discount Edit Page' do
       visit edit_merchant_bulk_discount_path(@merchant_1, @discount_1)
 
       expect(page).to_not have_content("Discount not created: Fields can't be left blank")
-save_and_open_page
+
       click_button('Submit')
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}/edit")
