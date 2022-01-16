@@ -1,6 +1,8 @@
 <%= link_to "Items", "/merchants/#{@merchant.id}/items" %>
 <%= link_to "Invoices", merchant_invoices_path(@merchant) %>
 
+<%= link_to "View All My Discounts", merchant_bulk_discounts_path(@merchant) %>
+
 <h1><%= @merchant.name %></h1>
 
 <p>Top 5 Customers</p>
