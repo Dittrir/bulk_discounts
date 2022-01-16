@@ -1,0 +1,22 @@
+<h1>Edit Discount #: <%= @discount.id %></h1>
+
+<% if @discount.errors.any? %>
+  <div id="error_explanation">
+    <p><%= pluralize(@discount.errors.count, "error") %> prohibited this post from being saved: </p>
+      <ul>
+        <% @discount.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form_with url: edit_merchant_bulk_discount_path(@merchant, @discount), method: :patch, local:true do |form| %>
+    <%= form.label :percent_discount, "Percent Discount" %>
+    <%= form.text_field :percent_discount %>
+
+    <%= form.label :quantity_threshold, "Quantity Threshold" %>
+    <%= form.text_field :quantity_threshold %>
+
+  <%= form.submit "Submit" %>
+<% end %>

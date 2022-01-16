@@ -11,4 +11,5 @@ class BulkDiscount < ApplicationRecord
                               greater_than: 1,
                               message: "must be 2 or greater."}
   belongs_to :merchant
+
 end
