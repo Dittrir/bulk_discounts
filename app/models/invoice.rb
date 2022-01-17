@@ -20,19 +20,16 @@ class Invoice < ApplicationRecord
   end
 
   def total_discounted_revenue
-    best_discount = []
-    items_with_discounts_applied = []
-    bulk_discounts = self.bulk_discounts.order(:quantity_threshold)
-    if bulk_discounts.length > 0
-      bulk_discounts.map do |discount|
-        invoice_items.where('invoice_items.quantity >= ?', discount.quantity_threshold)
+    bulk_discounts = self.bulk_discounts.order(:quantity_threshold) #Lowest quantity threshold first to be overwritten with higher quantity thresholds later
+    if bulk_discounts.length > 0 #Ensure merchant has discounts
+      bulk_discounts.map do |discount| #Run through discounts, lowest q_threshold first
+        invoice_items.where('invoice_items.quantity >= ?', discount.quantity_threshold) #Only access items with a quantity above threshold
                      .group(:id)
-                     .each do |invoice_item_with_discount|
-          best_discount << invoice_item_with_discount.discounted_item_price(discount.percent_discount)
+                     .each do |invoice_item_with_discount| #apply the discount to only the item that meets requirements
+          invoice_item_with_discount.discounted_item_price(discount.percent_discount) #pass the percent discount price in
         end
       end
-      items_with_discounts_applied << best_discount.min
-      (items_with_discounts_applied.sum).to_i
+      total_revenue # Add all updated item prices together
     else
       total_revenue
     end
