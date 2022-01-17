@@ -12,4 +12,8 @@ class InvoiceItem < ApplicationRecord
       ii.update_column(:unit_price, (item_price * percent_of_total_price))
     end
   end
+
+  def discount_used
+    binding.pry
+  end
 end
