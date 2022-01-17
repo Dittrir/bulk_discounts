@@ -65,16 +65,16 @@ RSpec.configure do |config|
 
     # @merchant_2 = Merchant.create!(name: "Mike")
     # Items
-    @item_1 = @merchant_1.items.create!(name: "Item_1", description: "Description_1", unit_price: 16)
-    @item_2 = @merchant_1.items.create!(name: "Item_2", description: "Description_2", unit_price: 23)
-    @item_3 = @merchant_1.items.create!(name: "Item_3", description: "Description_3", unit_price: 11)
-    @item_4 = @merchant_1.items.create!(name: "Item_4", description: "Description_4", unit_price: 312)
-    @item_5 = @merchant_1.items.create!(name: "Item_5", description: "Description_5", unit_price: 23)
-    @item_6 = @merchant_1.items.create!(name: "Item_6", description: "Description_6", unit_price: 41)
-    @item_7 = @merchant_1.items.create!(name: "Item_7", description: "Description_7", unit_price: 153)
-    @item_8 = @merchant_1.items.create!(name: "Item_8", description: "Description_8", unit_price: 1)
-    @item_9 = @merchant_1.items.create!(name: "Item_9", description: "Description_9", unit_price: 15)
-    @item_10 = @merchant_1.items.create!(name: "Item_10", description: "Description_10", unit_price: 87)
+    @item_1 = @merchant_1.items.create!(name: "Item_1", description: "Description_1", unit_price: 1600)
+    @item_2 = @merchant_1.items.create!(name: "Item_2", description: "Description_2", unit_price: 2300)
+    @item_3 = @merchant_1.items.create!(name: "Item_3", description: "Description_3", unit_price: 1100)
+    @item_4 = @merchant_1.items.create!(name: "Item_4", description: "Description_4", unit_price: 31200)
+    @item_5 = @merchant_1.items.create!(name: "Item_5", description: "Description_5", unit_price: 2300)
+    @item_6 = @merchant_1.items.create!(name: "Item_6", description: "Description_6", unit_price: 4100)
+    @item_7 = @merchant_1.items.create!(name: "Item_7", description: "Description_7", unit_price: 15300)
+    @item_8 = @merchant_1.items.create!(name: "Item_8", description: "Description_8", unit_price: 100)
+    @item_9 = @merchant_1.items.create!(name: "Item_9", description: "Description_9", unit_price: 1500)
+    @item_10 = @merchant_1.items.create!(name: "Item_10", description: "Description_10", unit_price: 8700)
 
     # @item_11 = @merchant_2.items.create!(name: "Item_11", description: "Description_11", unit_price: 1515)
     # @item_12 = @merchant_2.items.create!(name: "Item_12", description: "Description_12", unit_price: 8787)
@@ -161,6 +161,10 @@ RSpec.configure do |config|
     @invoice_18.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "success")
     @invoice_19.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "failed")
     @invoice_20.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "failed")
+
+    @discount_1 = @merchant_1.bulk_discounts.create!(percent_discount: 20, quantity_threshold: 10)
+    @discount_1 = @merchant_1.bulk_discounts.create!(percent_discount: 30, quantity_threshold: 20)
+    @discount_1 = @merchant_1.bulk_discounts.create!(percent_discount: 40, quantity_threshold: 30)
   end
 
   config.after(:each) do

@@ -25,19 +25,15 @@ RSpec.describe 'Bulk Discount Edit Page' do
       expect(page).to have_content("This discount takes 10% off purchases of 5 or more items!")
     end
 
-    it 'sad path: gives error messages when form is submitted with empty fields' do
+    it 'sad path: uses original data when form is submitted with empty fields' do
       visit edit_merchant_bulk_discount_path(@merchant_1, @discount_1)
-
-      expect(page).to_not have_content("Discount not created: Fields can't be left blank")
 
       click_button('Submit')
 
-      expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}/edit")
-      expect(page).to have_content("4 errors prohibited this post from being saved")
-      expect(page).to have_content("Percent discount can't be left blank.")
-      expect(page).to have_content("Percent discount must be between 0 and 100")
-      expect(page).to have_content("Quantity threshold can't be left blank")
-      expect(page).to have_content("Quantity threshold must be 2 or greater.")
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}")
+      expect(page).to have_content("Discount Updated")
+      expect(page).to have_content("Discount #: #{@discount_1.id}")
+      expect(page).to have_content("This discount takes 20% off purchases of 10 or more items!")
     end
 
     it 'sad path: gives arror message when percent discount is outside of range' do
@@ -96,10 +92,8 @@ RSpec.describe 'Bulk Discount Edit Page' do
       click_button('Submit')
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}/edit")
-      expect(page).to have_content("3 errors prohibited this post from being saved")
+      expect(page).to have_content("1 error prohibited this post from being saved")
       expect(page).to have_content("Percent discount must be between 0 and 100")
-      expect(page).to have_content("Quantity threshold can't be left blank")
-      expect(page).to have_content("Quantity threshold must be 2 or greater.")
     end
   end
 end
