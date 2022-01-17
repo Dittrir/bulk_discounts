@@ -71,6 +71,15 @@ RSpec.describe "Merchant invoice show" do
     expect(page).to_not have_content("Total Discounted Revenue: $4,992") #20% off 10+ items
   end
 
+  it 'ensures that the best discount is being used' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 30, unit_price: @item_4.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    expect(page).to have_content("Total Discounted Revenue: $5,616") #40% off 30+ items
+  end
+
   it 'no discounts are applied if no items meet the quantity threshold' do
     invoice_21 = @customer_6.invoices.create!
     invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 9, unit_price: @item_4.unit_price, status: 0)
@@ -110,15 +119,43 @@ RSpec.describe "Merchant invoice show" do
 
   it 'displays a link next to each item to the show page of the bulk discount applied to it' do
     invoice_21 = @customer_6.invoices.create!
-    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 20, unit_price: @item_4.unit_price, status: 0)
-    invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 10, unit_price: @item_5.unit_price, status: 0)
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 30, unit_price: @item_4.unit_price, status: 0)
 
     visit merchant_invoice_path(@merchant_1, invoice_21)
 
-    within("#invoice_item-#{@item_4.id}") do
-      click_link "Discount #:#{@discount_2.id}"
+    ii = invoice_21.invoice_items.first
+    within("#invoice_item-#{ii.id}") do
+      click_link "Discount #:#{ii.find_discount_used.id}"
+    end
+
+    expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_3.id}")
+  end
+
+  it 'show page link will change depending on the quantity threshold' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 20, unit_price: @item_4.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    ii = invoice_21.invoice_items.first
+    within("#invoice_item-#{ii.id}") do
+      click_link "Discount #:#{ii.find_discount_used.id}"
     end
 
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_2.id}")
+  end
+
+  it 'show page link will change depending on the quantity threshold' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 10, unit_price: @item_4.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    ii = invoice_21.invoice_items.first
+    within("#invoice_item-#{ii.id}") do
+      click_link "Discount #:#{ii.find_discount_used.id}"
+    end
+
+    expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}")
   end
 end
