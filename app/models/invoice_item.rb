@@ -6,8 +6,11 @@ class InvoiceItem < ApplicationRecord
   enum status: { pending: 0, packaged: 1, shipped: 2 }
 
   def discounted_item_price(discount_pct)
-    total_revenue = self.unit_price * self.quantity
-    discount_pct = ((100 - discount_pct).to_f * 0.01).round(3)
-    discount_pct * total_revenue
+    item_price = self.item.unit_price
+    discounted_pct = ((100 - discount_pct).to_f * 0.01).round(3)
+    InvoiceItem.where(item_id: self.item_id)
+               .each do |ii|
+                 ii.update_column(:unit_price, (item_price * discounted_pct))
+    end
   end
 end
