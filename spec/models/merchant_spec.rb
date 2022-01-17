@@ -56,7 +56,7 @@ RSpec.describe Merchant do
       new_invoice_3.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "success")
       new_invoice_4.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "success")
 
-      expected_result = [merchant_2, merchant_3, merchant_4, merchant_5, @merchant_1]
+      expected_result = [@merchant_1, merchant_2, merchant_3, merchant_4, merchant_5]
 
       expect(Merchant.top_five_merchants).to eq(expected_result)
     end
