@@ -9,11 +9,18 @@ class InvoiceItem < ApplicationRecord
     item_price = self.item.unit_price
     percent_of_total_price = ((100 - discounted_percent).to_f * 0.01).round(3)
     InvoiceItem.where(item_id: self.item_id).each do |ii|
-      ii.update_column(:unit_price, (item_price * percent_of_total_price))
+             ii.update_column(:unit_price, (item_price * percent_of_total_price))
     end
   end
 
-  def discount_used
-    binding.pry
+  def find_discount_used
+    invoice.merchant.last.bulk_discounts
+           .where('quantity_threshold <= ?', self.quantity)
+           .order(quantity_threshold: :desc)
+           .first
+  end
+
+  def uses_discount?
+    self.unit_price != item.unit_price
   end
 end
