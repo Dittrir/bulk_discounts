@@ -67,18 +67,44 @@ RSpec.describe "Merchant invoice show" do
 
     visit merchant_invoice_path(@merchant_1, invoice_21)
 
-    expect(page).to have_content("Total Discounted Revenue: $4,368")
-    expect(page).to_not have_content("Total Discounted Revenue: $4,992")
+    expect(page).to have_content("Total Discounted Revenue: $4,368") #30% off 20+ items
+    expect(page).to_not have_content("Total Discounted Revenue: $4,992") #20% off 10+ items
   end
 
-  it 'is only applied to the items that meet the quantity threshold' do
+  it 'no discounts are applied if no items meet the quantity threshold' do
     invoice_21 = @customer_6.invoices.create!
     invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 9, unit_price: @item_4.unit_price, status: 0)
     invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 3, unit_price: @item_5.unit_price, status: 0)
 
     visit merchant_invoice_path(@merchant_1, invoice_21)
 
-    expect(page).to have_content("Total Discounted Revenue: $4,368")
-    expect(page).to_not have_content("Total Discounted Revenue: $4,992")
+    expect(page).to have_content("Total Revenue: $2,877")
+    expect(page).to have_content("Total Discounted Revenue: $2,877")
+  end
+
+  it 'is only applied to the items that meet the quantity threshold' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 20, unit_price: @item_4.unit_price, status: 0)
+    invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 3, unit_price: @item_5.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    expect(page).to have_content("Total Revenue: $6,309")
+    #20 * 312 = 6240 * .7 (with 30% off 20 or more items) = 4368 + (3 * 23 = 69) = 4437
+    expect(page).to have_content("Total Discounted Revenue: $4,437")
+  end
+
+  it 'applies the discounts to the individual items that meet their own quantity thresholds' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 20, unit_price: @item_4.unit_price, status: 0)
+    invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 10, unit_price: @item_5.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    expect(page).to have_content("Total Revenue: $6,470")
+    #20 * 312 = 6240 * .7 (with 30% off 20 or more items) = 4368
+    #10 * 23 = 230 * .8 (with 20% off 10 or more items) = 184
+    #4368 + 184 = 4552
+    expect(page).to have_content("Total Discounted Revenue: $4,552")
   end
 end
