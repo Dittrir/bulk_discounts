@@ -14,8 +14,8 @@ RSpec.describe Invoice do
   end
 
   it '#total_revenue' do
-    expect(@invoice_1.total_revenue).to eq(16)
-    expect(@invoice_4.total_revenue).to eq(124800)
+    expect(@invoice_1.total_revenue).to eq(1600)
+    expect(@invoice_4.total_revenue).to eq(12480000)
   end
 
   describe 'models' do
