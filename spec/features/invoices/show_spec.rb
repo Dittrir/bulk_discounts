@@ -71,11 +71,11 @@ RSpec.describe "Merchant invoice show" do
     expect(page).to_not have_content("Total Discounted Revenue: $4,992")
   end
 
-  it 'is only applied to the items that meet the quantity threshold'
-  #   invoice_21 = @customer_6.invoices.create!
-  #   invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 20, unit_price: @item_4.unit_price, status: 0)
-  #   invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 20, unit_price: @item_5.unit_price, status: 0)
-  #
-  #   visit merchant_invoice_path(@merchant_1, invoice_21)
-  # end
+  it 'is only applied to the items that meet the quantity threshold' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 9, unit_price: @item_4.unit_price, status: 0)
+    invoice_21.invoice_items.create!(item_id: @item_5.id, quantity: 3, unit_price: @item_5.unit_price, status: 0)
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+    save_and_open_page
+  end
 end
