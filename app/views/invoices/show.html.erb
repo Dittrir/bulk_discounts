@@ -14,7 +14,10 @@
 <% @invoice.invoice_items.each do |invoice_item| %>
   <h3>Name: <%= invoice_item.item.name %> </h3>
   <p>Quantity: <%= invoice_item.quantity %></p>
-  <p>Price: <%= number_to_currency(invoice_item.unit_price/100, precision: 0) %></p>
+  <section id="invoice_item-<%=invoice_item.id%>">
+    <p>Price: <%= number_to_currency(invoice_item.unit_price/100, precision: 0) %></p>
+    <p><%= link_to "Discount #: #{invoice_item.discount_used.id}", merchant_bulk_discount_path(@merchant, invoice_item.discount_used)%></p>
+  </section>
   <p>
     <%= form_with model: [@merchant, invoice_item], local: true do |form| %>
       <%= form.label "Status:" %>
