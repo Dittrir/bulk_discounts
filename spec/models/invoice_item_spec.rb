@@ -31,7 +31,6 @@ RSpec.describe InvoiceItem do
     it '#find_discount_used' do
       invoice_21 = @customer_5.invoices.create!
       ii_1 = invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 3, unit_price: @item_4.unit_price, status: 0)
-      invoice_21.total_discounted_revenue
 
       expect(ii_1.uses_discount?).to eq(false)
     end
