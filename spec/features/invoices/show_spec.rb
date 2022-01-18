@@ -178,4 +178,18 @@ RSpec.describe "Merchant invoice show" do
 
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}")
   end
+
+  it 'show page link does not appear if item doesnt use a discount' do
+    invoice_21 = @customer_6.invoices.create!
+    invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 8, unit_price: @item_4.unit_price, status: 0)
+
+    visit merchant_invoice_path(@merchant_1, invoice_21)
+
+    ii = invoice_21.invoice_items.first
+    discounts = BulkDiscount.all
+    
+    discounts.each do |discount|
+      expect(page).to_not have_content("Discount #:#{discount.id}")
+    end
+  end
 end
