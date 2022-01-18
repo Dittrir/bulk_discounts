@@ -11,6 +11,10 @@ RSpec.describe Merchant do
 
   describe 'instance methods' do
     it '#top_five_customers' do
+      invoice_21 = @customer_4.invoices.create!
+      invoice_21.invoice_items.create!(item_id: @item_8.id, quantity: 8, unit_price: @item_8.unit_price, status: 1)
+      invoice_21.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "failed")
+      
       expect(@merchant_1.top_five_customers).to eq([@customer_6, @customer_4, @customer_5, @customer_3, @customer_2])
     end
 

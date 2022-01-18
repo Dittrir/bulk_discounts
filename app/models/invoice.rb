@@ -24,8 +24,8 @@ class Invoice < ApplicationRecord
     if discounts.length > 0 #Ensure merchant has discounts
       discounts.map do |discount| #Run through discounts, lowest q_threshold first
         invoice_items.where('invoice_items.quantity >= ?', discount.quantity_threshold) #Only access items with a quantity above threshold
-                     .each do |discountable_ii| #apply the discount to only the item that meets requirements
-          discountable_ii.discounted_item_price(discount.percent_discount) #pass the percent discount price in and apply discount
+                     .each do |invoice_item_with_discount| #apply the discount to only the item that meets requirements
+          invoice_item_with_discount.discounted_item_price(discount.percent_discount) #pass the percent discount price in
         end
       end
       total_revenue # Add all updated item prices together
