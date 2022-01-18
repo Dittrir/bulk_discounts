@@ -16,7 +16,7 @@ RSpec.describe 'Admin Invoices Show' do
     it 'I see the total revenue that will be generated from this invoice' do
       visit "/admin/invoices/#{@invoice_1.id}"
 
-      expect(page).to have_content("Total revenue generated: #{@invoice_1.total_revenue}")
+      expect(page).to have_content("Total Revenue Generated: $16")
     end
 
     it 'I can update the invoice status' do
@@ -33,12 +33,20 @@ RSpec.describe 'Admin Invoices Show' do
     it 'displays all of the items and their attributes' do
       visit "/admin/invoices/#{@invoice_1.id}"
 
+      ii = @invoice_1.invoice_items.first
+
       within "#invoice_show-#{@invoice_1.id}" do
-        expect(page).to have_content("#{@invoice_1.invoice_items.first.item.name}")
-        expect(page).to have_content("#{@invoice_1.invoice_items.first.quantity}")
-        expect(page).to have_content("#{@invoice_1.invoice_items.first.unit_price}")
-        expect(page).to have_content("#{@invoice_1.invoice_items.first.status}")
+        expect(page).to have_content("Item Name: Item_1")
+        expect(page).to have_content("Item Quantity: 1")
+        expect(page).to have_content("Item Unit Price: $16")
+        expect(page).to have_content("Item Status: pending")
       end
+    end
+
+    it 'displays all of the items and their attributes' do
+      visit "/admin/invoices/#{@invoice_1.id}"
+
+      expect(page).to have_content("Total Discounted Revenue: $16")
     end
   end
 end

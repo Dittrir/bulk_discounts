@@ -162,8 +162,8 @@ RSpec.configure do |config|
     @invoice_19.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "failed")
     @invoice_20.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "failed")
 
-    @discount_1 = @merchant_1.bulk_discounts.create!(percent_discount: 20, quantity_threshold: 10)
     @discount_2 = @merchant_1.bulk_discounts.create!(percent_discount: 30, quantity_threshold: 20)
+    @discount_1 = @merchant_1.bulk_discounts.create!(percent_discount: 20, quantity_threshold: 10)
     @discount_3 = @merchant_1.bulk_discounts.create!(percent_discount: 40, quantity_threshold: 30)
   end
 
