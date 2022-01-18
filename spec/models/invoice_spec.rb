@@ -43,6 +43,17 @@ RSpec.describe Invoice do
       expect(invoice_21.total_discounted_revenue).to eq(436800)
     end
 
+    it 'tests merchant else statement by creating merchants without discounts' do
+      merchant_2 = Merchant.create!(name: "Bill")
+      most_expensive_item = merchant_2.items.create!(name: "Most Expensive Item", description: "Description", unit_price: 10000000)
+      super_rich_customer = Customer.create!(first_name: "Billionaire", last_name: "Person")
+      new_invoice_1 = super_rich_customer.invoices.create!
+      new_invoice_1.invoice_items.create!(item_id: most_expensive_item.id, quantity: 1, unit_price: most_expensive_item.unit_price, status: 1)
+      new_invoice_1.transactions.create!(credit_card_number: "1111 1111 1111 1111", result: "success")
+
+      expect(new_invoice_1.total_discounted_revenue).to eq(10000000)
+    end
+
     it 'applies the same discount to all items that meet the quantity threshold' do
       invoice_21 = @customer_6.invoices.create!
       invoice_21.invoice_items.create!(item_id: @item_4.id, quantity: 30, unit_price: @item_4.unit_price, status: 0)
