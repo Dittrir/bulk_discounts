@@ -8,6 +8,15 @@ RSpec.describe 'Bulk Discount Index Page' do
       @discount_3 = @merchant_1.bulk_discounts.create!(percent_discount: 40, quantity_threshold: 30)
     end
 
+    it 'displays Upcoming Holidays at the top with the next 3 US holidays' do
+      visit "/merchants/#{@merchant_1.id}/bulk_discounts"
+
+      expect(page).to have_content("Upcoming Holidays")
+      expect(page).to have_content("Presidents Day")
+      expect(page).to have_content("Good Friday")
+      expect(page).to have_content("Memorial Day")
+    end
+
     it 'displays Discounts at the top' do
       visit "/merchants/#{@merchant_1.id}/bulk_discounts"
 
