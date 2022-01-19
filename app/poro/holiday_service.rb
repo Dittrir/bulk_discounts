@@ -1,4 +1,4 @@
-class BulkDiscountService
+class HolidayService
   def self.three_upcoming
     holidays.first(3)
   end
