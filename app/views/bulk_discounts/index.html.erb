@@ -1,9 +1,3 @@
-<head>
-  <p>Upcoming Holidays: <% @facade.holidays.each do |holiday| %>
-    <p><%= holiday.name %> Date: <%= holiday.date %></p>
-  <% end %>
-</head>
-
 <h1>Bulk Discounts</h1>
 
 <p><%= link_to "Create A New Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %></p>
